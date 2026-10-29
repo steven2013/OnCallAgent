@@ -1,0 +1,32 @@
+[project]
+name = "oncall-agent"
+version = "0.1.0"
+description = "用于学习 LangGraph 的简易运维 Agent：RAG、短期记忆、长期记忆与工具调用。"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "langgraph>=1.0",
+    "langchain>=1.0",
+    "langchain-core>=1.0",
+    "langchain-text-splitters>=0.3",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0"]
+openai = ["langchain-openai>=0.3"]
+
+[project.scripts]
+oncall-agent = "oncall_agent.cli:main"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+oncall_agent = ["knowledge/*.md"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
