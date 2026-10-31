@@ -11,6 +11,7 @@ from langgraph.types import Command
 from oncall_agent.fleet import SERVICES, reset_fleet
 from oncall_agent.graph import build_graph
 from oncall_agent.llm import KeywordRouterModel, get_model
+from oncall_agent.parallel import run_parallel
 from oncall_agent.state import OpsContext
 
 
@@ -148,6 +149,12 @@ def main(argv: list[str] | None = None) -> int:
 
     sub.add_parser("demo", help="跑一遍固定剧本")
     sub.add_parser("graph", help="打印 mermaid 图")
+    parallel = sub.add_parser("parallel", help="告警并行分诊")
+    parallel.add_argument(
+        "--alert",
+        default="payment-api 和 order-worker 告警",
+        help="告警原文，写上服务名就会并行排查这些服务",
+    )
 
     args = parser.parse_args(argv)
     if args.command == "graph":
@@ -155,6 +162,9 @@ def main(argv: list[str] | None = None) -> int:
         return 0
     if args.command == "demo":
         run_demo()
+        return 0
+    if args.command == "parallel":
+        run_parallel(args.alert)
         return 0
 
     model = KeywordRouterModel() if args.scripted else get_model(args.model)

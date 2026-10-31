@@ -12,11 +12,12 @@ source .venv/bin/activate
 pip install -e ".[dev]"
 
 python3 -m oncall_agent demo
+python3 -m oncall_agent parallel
 python3 -m pytest
 python3 -m oncall_agent chat --scripted
 ```
 
-`demo` 用固定剧本走完检索、磁盘检查、短期记忆、长期记忆和重启审批。`chat --scripted` 是同一张图的交互模式。输入 `exit` 退出；申请重启时会询问 `批准这个操作？[y/N]`。
+`demo` 用固定剧本走完检索、磁盘检查、短期记忆、长期记忆和重启审批。`parallel` 演示一次告警拆成多项检查同时执行。`chat --scripted` 是对话模式。输入 `exit` 退出；申请重启时会询问 `批准这个操作？[y/N]`。
 
 不设置模型时使用 `KeywordRouterModel`。它按原话选择工具，这样没有 API key 也能看到每个节点的输入输出。图的代码和真实模型相同。换成真实模型：
 
@@ -61,7 +62,8 @@ flowchart TD
 3. `src/oncall_agent/tools.py`：工具如何声明，`ToolRuntime` 如何拿到 store。
 4. `src/oncall_agent/rag.py`：手册如何切块并放进向量库。
 5. `src/oncall_agent/llm.py`：关键词模型怎样模仿「决定调用哪个工具」。
-6. `tests/test_graph.py`：同一条 `thread_id`、两条线程、批准和拒绝分别断言了什么。
+6. `src/oncall_agent/parallel.py`：一次告警如何用 `Send` 并行排查，再汇合写报告。
+7. `tests/test_graph.py`：同一条 `thread_id`、两条线程、批准和拒绝分别断言了什么。
 
 ## 状态
 
@@ -106,6 +108,26 @@ graph.invoke({"messages": [{"role": "user", "content": "我刚才说我负责哪
 同一个 `thread_id` 能看见上一轮。换一个 `thread_id` 就看不见。进程退出后 `InMemorySaver` 的内容消失。要落盘可以换成 `langgraph-checkpoint-sqlite` 里的 `SqliteSaver`，编译参数仍然是 `checkpointer=`。
 
 长期记忆是 store，按命名空间 `(user_id, "memories")` 存放。两条线程只要 `user_id` 相同，就能读到同一批事实。`recall_memory` 在每轮一开始运行，所以本轮 `remember` 写下的内容，下一轮才会出现在系统提示里。当前轮仍然能从工具返回的 `ToolMessage` 里看到刚写下去的句子。
+
+## 并行分诊
+
+`src/oncall_agent/parallel.py` 是另一张图，业务是值班分诊。告警原文里点名的服务会同时排查，每个服务有三项检查：日志、资源、手册。
+
+```mermaid
+flowchart TD
+  startNode([START]) --> intake[intake]
+  intake -->|Send| inspect[inspect 多项同时跑]
+  inspect --> report[write_report 等全部完成]
+  report --> endNode([END])
+```
+
+`dispatch` 返回一组 `Send("inspect", 任务)`。任务数量不写死在边上，所以两个服务就是 6 个并行任务。`findings` 使用 `operator.add` 作为 reducer：每个任务只追加自己的一条结果。没有这个 reducer 时，后完成的任务会把先完成的结果盖掉。
+
+`write_report` 注册时带了 `defer=True`。它要等这一步里所有 `inspect` 都结束，再根据完整的 `findings` 写一份报告。
+
+```bash
+python3 -m oncall_agent parallel --alert "payment-api 和 order-worker 告警"
+```
 
 ## 人工审批
 
