@@ -1,0 +1,1 @@
+[2026-03-07 16:30:00,000] WARN heartbeat failed; processing took 15000ms which is above session.timeout.ms 10000; client heartbeat is sent inside poll

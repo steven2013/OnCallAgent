@@ -1,0 +1,32 @@
+# id	case	regex	note
+B0-PROD	B0	Expiring [0-9]+ record|Buffer exhausted|NotEnoughReplicas|NOT_ENOUGH_REPLICAS	生产端缓冲或副本不足
+B1-SLOW	B1	下游响应|downstream rt=|rt=[1-9][0-9]{3,}ms|耗时[1-9][0-9]{3,}ms	下游变慢
+B1-QUEUE	B1	阻塞队列|remainingCapacity=0|RejectedExecutionException|blocking queue full	本地队列打满
+B1-POLLWAIT	B1	poll interval|poll 间隔|距上次 poll	poll 被拖慢
+B2-THREAD	B2	转发线程	转发线程池
+B2-AZ	B2	AZ ?倒换|可用区倒换	倒换时间线
+B2-FALLING	B2	lag 持续下降|lag 下降趋势	倒换后正在恢复
+B3-SHRINK	B3	Shrinking ISR	ISR 收缩
+B3-EXPAND	B3	Expanding ISR	ISR 扩回
+B3-FETCH	B3	replica\.fetch\.max\.bytes|larger than the configured replica fetch	拉取上限
+B3-GC	B3	Pause Full|Full GC|seconds were spent in GC	长 GC 线索
+C1-ZKVER	C1	Cached zkVersion|skip updating ISR	zkVersion 过期
+ZK-SESSION	C1	ZooKeeper session has expired|Session expired	ZK 会话中断
+G1-DESER	G1	RecordDeserializationException|SerializationException|消息格式不合法|Unknown magic byte	非法格式
+G1-POLL	G1	poll timeout has expired	poll 超时
+G1-FAIL	G1	has failed, removing it from the group	成员被移除
+G1-EMPTY	G1	is now empty|transitioned to Dead	组空或 Dead
+G1-REBAL	G1	Preparing to rebalance group|PreparingRebalance	rebalance
+G2-HB	G2	heartbeat failed|Heartbeat failed|Timed out HeartbeatRequest	心跳失败
+G3-STUCK	G3	位点不前进|消费位点不变|offset not advancing	位点卡住
+G3-OOR	N2	OffsetOutOfRange|Offset out of range|OFFSET_OUT_OF_RANGE|offset_out_of_range	真越界
+G4-ALERT	G4	5013509	治理页面分流
+N1-POLL	N1	max\.poll\.interval\.ms	新客户端处理超时
+C2-VALIDATE	C2	Failed to create or validate data directory|Shutdown broker because none of the specified log dirs	目录校验失败
+C2-SWP	C2	\.swp([^a-zA-Z]|$)	vim 交换文件
+C3-DISK	C3	No space left on device	磁盘满
+C3-EXIT	C3	Fatal error during KafkaServer startup|Exiting Kafka	进程退出
+C4-SILENT	C4	Kafka 未启动|前置检查未通过|预检失败|应用日志未创建	预检失败且无业务日志
+C5-NOAUTH	C5	NoAuthException|KeeperErrorCode = NoAuth|NoAuth for	ZK 授权失败
+B4-SPEC	B4	慢日志	慢日志 topic
+B5-HOT	B5	单分区吞吐到顶|热点分区|其余分区空闲	分区并行度不足

@@ -1,0 +1,3 @@
+[2026-03-10 19:00:00,000] ERROR [KafkaServer id=1] Fatal error during KafkaServer startup. Prepare to shutdown
+java.io.IOException: No space left on device
+[2026-03-10 19:00:01,000] ERROR Exiting Kafka due to fatal exception during startup

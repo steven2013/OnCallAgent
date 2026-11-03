@@ -1,0 +1,2 @@
+[2026-03-09 18:00:00,000] ERROR Failed to create or validate data directory /data/kafka-logs
+java.nio.file.AccessDeniedException: /data/kafka-logs/.server.properties.swp

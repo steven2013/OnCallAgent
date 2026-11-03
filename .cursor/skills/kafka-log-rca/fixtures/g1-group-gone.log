@@ -1,0 +1,6 @@
+[2026-03-07 16:00:00,100] ERROR org.apache.kafka.common.errors.RecordDeserializationException: Unknown magic byte at offset 42
+[2026-03-07 16:00:04,000] INFO Member consumer-1 sending LeaveGroup request due to consumer poll timeout has expired. This means the time between subsequent calls to poll() was longer than the configured max.poll.interval.ms
+[2026-03-07 16:00:04,200] INFO Preparing to rebalance group order-cg
+[2026-03-07 16:00:05,000] INFO Member consumer-1 in group order-cg has failed, removing it from the group
+[2026-03-07 16:00:06,000] INFO Group order-cg with generation 4 is now empty
+[2026-03-07 16:00:07,000] INFO Group order-cg transitioned to Dead in generation 4

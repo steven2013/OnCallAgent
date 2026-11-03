@@ -1,0 +1,1 @@
+[2026-03-07 16:40:00,000] INFO Member consumer-B sending LeaveGroup request due to consumer poll timeout has expired. This means the time between subsequent calls to poll() was longer than the configured max.poll.interval.ms

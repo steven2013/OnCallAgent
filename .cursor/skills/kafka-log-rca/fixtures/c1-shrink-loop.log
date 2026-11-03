@@ -1,0 +1,5 @@
+[2026-03-04 13:00:00,000] INFO ZooKeeper session has expired
+[2026-03-04 13:00:01,000] INFO Shrinking ISR for partition [t,3] from 6,5 to 5
+[2026-03-04 13:00:01,003] INFO Cached zkVersion [66] not equal to that in zookeeper, skip updating ISR
+[2026-03-04 13:00:02,000] INFO Shrinking ISR for partition [t,3] from 6,5 to 5
+[2026-03-04 13:00:02,003] INFO Cached zkVersion [66] not equal to that in zookeeper, skip updating ISR
