@@ -1,0 +1,20 @@
+# file	required ids	forbidden ids
+b1-downstream.log	B0-PROD,B1-SLOW,B1-QUEUE,B1-POLLWAIT	C1-ZKVER,G3-OOR
+b2-threads.log	B2-THREAD,B2-AZ	B2-FALLING
+b2-lag-falling.log	B2-AZ,B2-FALLING	B2-THREAD
+b3-isr.log	B3-SHRINK,B3-EXPAND,B3-FETCH,B3-GC	C1-ZKVER
+b4-spec.log	B4-SPEC	B5-HOT
+b5-partitions.log	B5-HOT	B4-SPEC
+g1-group-gone.log	G1-DESER,G1-POLL,G1-FAIL,G1-EMPTY,G1-REBAL,N1-POLL	G2-HB
+g2-old-heartbeat.log	G2-HB	G1-POLL,N1-POLL
+n1-modern-poll.log	G1-POLL,N1-POLL	G1-DESER,G1-EMPTY,G2-HB
+g3-hole.log	G3-STUCK	G3-OOR
+n2-oor.log	G3-OOR	G3-STUCK
+g4-alert.log	G4-ALERT	-
+c1-shrink-loop.log	B3-SHRINK,C1-ZKVER,ZK-SESSION	B3-EXPAND
+c2-swp.log	C2-VALIDATE,C2-SWP	-
+c2-kafka-swap.log	NONE	-
+c3-disk.log	C3-DISK,C3-EXIT	C2-SWP
+c4-silent.log	C4-SILENT	-
+c5-noauth.log	C5-NOAUTH	-
+healthy.log	NONE	-

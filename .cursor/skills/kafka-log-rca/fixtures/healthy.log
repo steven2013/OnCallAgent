@@ -1,0 +1,2 @@
+[2026-03-13 22:00:00,000] INFO [KafkaServer id=1] started (kafka.server.KafkaServer)
+[2026-03-13 22:00:01,000] INFO Group order-cg with generation 3 is now stable

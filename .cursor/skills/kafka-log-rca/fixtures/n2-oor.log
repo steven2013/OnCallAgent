@@ -1,0 +1,2 @@
+[2026-03-08 17:10:00,000] WARN org.apache.kafka.clients.consumer.OffsetOutOfRangeException: Offset out of range for partition t-2
+[2026-03-08 17:10:00,200] INFO Resetting offset for partition t-2 to offset 2000 because auto.offset.reset=earliest

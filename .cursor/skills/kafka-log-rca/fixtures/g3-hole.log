@@ -1,0 +1,1 @@
+[2026-03-08 17:00:00,000] WARN 消费位点不变 group=g topic=t partition=2 committed=1000，没有重置记录

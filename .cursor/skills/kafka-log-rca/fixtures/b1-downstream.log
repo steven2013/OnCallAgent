@@ -1,0 +1,4 @@
+[2026-03-01 10:00:01,100] WARN gateway downstream rt=1523ms path=/ces/push
+[2026-03-01 10:00:01,400] WARN 本地阻塞队列已满 remainingCapacity=0 reject producer send
+[2026-03-01 10:00:08,100] WARN consumer poll interval 6200ms lag accelerating
+[2026-03-01 10:00:09,000] WARN org.apache.kafka.clients.producer.internals.Sender - Expiring 12 records for topic-0: 30001 ms has passed since batch creation

@@ -1,0 +1,4 @@
+[2026-03-03 12:00:01,000] INFO [gc] Pause Full (G1 Compaction Pause) 11200ms
+[2026-03-03 12:00:02,000] INFO Shrinking ISR for partition [high-traffic,3] from 1,2,3 to 1
+[2026-03-03 12:00:09,000] INFO Expanding ISR for partition [high-traffic,3] from 1 to 1,2
+[2026-03-03 12:00:09,100] INFO replica.fetch.max.bytes=6291456 capped fetch on high-traffic
